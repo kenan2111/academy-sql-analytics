@@ -1,4 +1,4 @@
-# Handex Academy: SQL Analytics Case Study
+# Academy: SQL Analytics Case Study
 
 An online course platform (Handex Academy) needs real numbers for its next
 investment round: who earns, who owes, which course is dead? This project
