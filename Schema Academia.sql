@@ -1,0 +1,70 @@
+    
+--  CƏDVƏL STRUKTURU
+--
+--   +--------------------+                      +----------------------+
+--   |      CATEGORY      |                      |      INSTRUCTOR      |
+--   +--------------------+                      +----------------------+
+--   | PK category_id     |                      | PK instructor_id     |
+--   |    category_name   |                      |    first_name        |
+--   |    category_desc.. |                      |    last_name         |
+--   +--------------------+                      |    hire_date         |
+--             |1                                |    country           |
+--             |                                 |    status            |
+--             |                                 +----------------------+
+--             |                                            |1
+--             |            +--------------------+          |
+--             +----N------>|       COURSE       |<----N----+
+--                          +--------------------+
+--                          | PK course_id       |
+--                          |    course_title    |
+--                          | FK category_id     |
+--                          | FK instructor_id   |
+--                          |    price           |
+--                          |    course_level    |
+--                          |    duration_hours  |
+--                          |    publish_date    |
+--                          |    status          |
+--                          +--------------------+
+--                                     |1
+--                                     |
+--   +--------------------+            |N
+--   |      STUDENT       |   +------------------------+
+--   +--------------------+   |       ENROLLMENT       |
+--   | PK student_id      |   +------------------------+
+--   |    first_name      |1  | PK enrollment_id       |
+--   |    last_name       |---| FK student_id          |
+--   |    birth_date      | N | FK course_id           |
+--   |    register_date   |   |    enroll_date         |
+--   |    city            |   |    progress_percent    |
+--   |    status          |   |    status              |
+--   +--------------------+   |    completion_date     |
+--                            +------------------------+
+--                                 |1              |1
+--                     +-----------+               +-----------+
+--                     |N                                     |N
+--          +----------------------+            +----------------------+
+--          |       PAYMENT        |            |        REVIEW        |
+--          +----------------------+            +----------------------+
+--          | PK payment_id        |            | PK review_id         |
+--          | FK enrollment_id     |            | FK enrollment_id     |
+--          |    payment_date      |            |    review_date       |
+--          |    amount            |            |    rating  (1-5)     |
+--          |    payment_method    |            +----------------------+
+--          +----------------------+
+--
+--
+--  ƏLAQƏLƏR (kardinallıq)
+--  ---------------------------------------------------------------------
+--   category    1 : N  course        bir kateqoriyada çox kurs
+--   instructor  1 : N  course        bir müəllimin çox kursu
+--   student     1 : N  enrollment    bir tələbə çox kursa yazıla bilər
+--   course      1 : N  enrollment    bir kursa çox tələbə yazıla bilər
+--   enrollment  1 : N  payment       BİR QEYDİYYATIN BİR NEÇƏ ÖDƏNİŞİ OLA BİLƏR
+--   enrollment  1 : N  review        bir qeydiyyata rəy yazıla bilər (0 və ya 1)
+--
+--  status dəyərləri:
+--     course.status      -> 'ACTIVE' | 'ARCHIVED'
+--     enrollment.status  -> 'ACTIVE' | 'COMPLETED' | 'CANCELLED'
+--     instructor.status  -> 'ACTIVE' | 'PASSIVE'
+--     student.status     -> 'ACTIVE' | 'PASSIVE'
+--     payment_method     -> 'CARD'   | 'CASH'      | 'TRANSFER'   | 'INSTALLMENT'
